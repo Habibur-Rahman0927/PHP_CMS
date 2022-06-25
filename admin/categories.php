@@ -16,26 +16,7 @@
                             <small>Author Name</small>
                         </h1>
                         <div class="col-xs-6">
-                            <?php
-                                if(isset($_POST['submit'])){
-                                    $cat_title = $_POST['cat_title'];
-                                    if($cat_title == "" || empty($cat_title)){
-                                        echo "This Field is Empty";
-                                    }else{
-                                        $query = "INSERT INTO category(cat_title) VALUE('{$cat_title}') ";
-                                        $create_category_query = mysqli_query($conn, $query);
-                                        if(!$create_category_query){
-                                            die("QUERY FAILD" . mysqli_error($conn));
-                                        }
-                                    }
-                                }
-
-
-
-                            ?>
-
-
-
+                            <?php insert_categories();?>
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label for="cat_title">Category Title</label>
@@ -47,6 +28,14 @@
                                 </div>
 
                             </form>
+                            <?php 
+                                if (isset($_GET['edit'])){
+                                    $cat_id = $_GET['edit'];
+                                    include "includes/Update_categories.php";
+                                }
+                            
+                            ?>
+                            
                         </div>
                         <div class="col-xs-6">
                             <table class="table table-bordered table-hover">
@@ -54,6 +43,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Category Title</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +59,17 @@
                                             echo "<tr>";
                                             echo "<td>{$cat_id}</td>";
                                             echo "<td>{$cat_title}</td>";
+                                            echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
+                                            echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
                                             echo "</tr>";
+                                        }
+                                    ?>
+                                    <?php
+                                        if(isset($_GET['delete'])){
+                                            $the_cat_id = $_GET['delete'];
+                                            $query = "DELETE FROM category WHERE cat_id = {$the_cat_id} ";
+                                            $delete_query = mysqli_query($conn, $query);
+                                            header("Location: categories.php");
                                         }
                                     ?>
                                 </tbody>
