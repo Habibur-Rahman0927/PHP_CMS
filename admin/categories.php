@@ -49,28 +49,8 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        $query = "SELECT * FROM category";
-                                        // $query = "SELECT * FROM category LIMIT 5";
-                                        $select_all_categories_sidebar = mysqli_query($conn, $query);
-
-                                        while($row = mysqli_fetch_assoc($select_all_categories_sidebar)){
-                                            $cat_id = $row['cat_id'];
-                                            $cat_title = $row['cat_title'];
-                                            echo "<tr>";
-                                            echo "<td>{$cat_id}</td>";
-                                            echo "<td>{$cat_title}</td>";
-                                            echo "<td><a href='categories.php?edit={$cat_id}'>Edit</a></td>";
-                                            echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
-                                            echo "</tr>";
-                                        }
-                                    ?>
-                                    <?php
-                                        if(isset($_GET['delete'])){
-                                            $the_cat_id = $_GET['delete'];
-                                            $query = "DELETE FROM category WHERE cat_id = {$the_cat_id} ";
-                                            $delete_query = mysqli_query($conn, $query);
-                                            header("Location: categories.php");
-                                        }
+                                       findAllCategories();
+                                       deleteCategories();
                                     ?>
                                 </tbody>
                             </table>
