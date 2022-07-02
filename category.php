@@ -9,7 +9,11 @@
         <div class="row">
 
             <?php
-                $query = "SELECT * FROM post";
+
+            if(isset($_GET['category'])){
+                $cat_id = $_GET['category'];
+            }
+                $query = "SELECT * FROM post WHERE post_category_id = $cat_id";
                 $select_all_post_query = mysqli_query($conn, $query);
 
                 while($row = mysqli_fetch_assoc($select_all_post_query)){

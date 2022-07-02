@@ -1,6 +1,15 @@
 
 
 <?php
+function confirmQuery($result){
+    global $conn;
+    if(!$result){
+        die("QUERY FAILD" . mysqli_error($conn));
+    }
+}
+
+
+
 
 function insert_categories() {
     global $conn;
@@ -11,9 +20,7 @@ function insert_categories() {
         }else{
             $query = "INSERT INTO category(cat_title) VALUE('{$cat_title}') ";
             $create_category_query = mysqli_query($conn, $query);
-            if(!$create_category_query){
-                die("QUERY FAILD" . mysqli_error($conn));
-            }
+            confirmQuery($create_category_query);
          }
     }
 }
@@ -66,7 +73,14 @@ function findAllPost(){
         echo "<td>{$post_id}</td>";
         echo "<td>{$post_author}</td>";
         echo "<td>{$post_title}</td>";
-        echo "<td>{$post_category_id}</td>";
+
+        $query = "SELECT * FROM category WHERE cat_id = {$post_category_id} ";
+        $select_category_id = mysqli_query($conn, $query);
+        while ($row =  mysqli_fetch_assoc($select_category_id)) {
+            $cat_id = $row['cat_id'];
+            $cat_title = $row['cat_title'];
+            echo "<td>{$cat_title}</td>";
+        }
         echo "<td>{$post_status}</td>";
         echo "<td><img width='100' src='../images/$post_image' alt='image'></td>";
         echo "<td>{$post_tags}</td>";
@@ -109,9 +123,7 @@ function insert_posts() {
         }else{
             $query = "INSERT INTO post(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) VALUE({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}') ";
             $create_post_query = mysqli_query($conn, $query);
-            if(!$create_post_query){
-                die("QUERY FAILD" . mysqli_error($conn));
-            }
+            confirmQuery($create_post_query);
          }
     }
 }
