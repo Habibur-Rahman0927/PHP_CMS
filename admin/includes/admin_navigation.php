@@ -45,17 +45,17 @@
                     <li>
                         <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Category</a>
                     </li>
-                    <li class="active">
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Comment</a>
+                    <li class="">
+                        <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comment</a>
                     </li>
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#categories"><i class="fa fa-fw fa-arrows-v"></i> User <i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="categories" class="collapse">
                             <li>
-                                <a href="#">View All Category</a>
+                                <a href="users.php">View All Users</a>
                             </li>
                             <li>
-                                <a href="#">Add Category</a>
+                                <a href="users.php?source=add_user.php">Add User</a>
                             </li>
                         </ul>
                     </li>

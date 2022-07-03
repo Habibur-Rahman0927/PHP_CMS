@@ -115,17 +115,93 @@ function insert_posts() {
         $post_tags = $_POST['post_tags'];
         $post_content = $_POST['post_content'];
         $post_date = date('d-m-y');
-        $post_comment_count = 4;
         move_uploaded_file($post_image_temp, "../images/$post_image" );
 
         if($post_title == "" || empty($post_title)){
             echo "This Field is Empty";
         }else{
-            $query = "INSERT INTO post(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) VALUE({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}') ";
+            $query = "INSERT INTO post(post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags,  post_status) VALUE({$post_category_id}, '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}') ";
             $create_post_query = mysqli_query($conn, $query);
             confirmQuery($create_post_query);
          }
     }
 }
+// comment
 
+function findAllComments(){
+    global $conn;
+    $query = "SELECT * FROM comments";
+    // $query = "SELECT * FROM category LIMIT 5";
+    $select_all_post_sidebar = mysqli_query($conn, $query);
+
+    while($row = mysqli_fetch_assoc($select_all_post_sidebar)){
+        $comment_id = $row['comment_id'];
+        $comment_post_id = $row['comment_post_id'];
+        $comment_author = $row['comment_author'];
+        $comment_content = $row['comment_content'];
+        $comment_email = $row['comment_email'];
+        $comment_status = $row['comment_status'];
+        $comment_Date = $row['comment_Date'];
+        echo "<tr>";
+        echo "<td>{$comment_id}</td>";
+        echo "<td>{$comment_post_id}</td>";
+        echo "<td>{$comment_author}</td>";
+        echo "<td>{$comment_email}</td>";
+
+        // $query = "SELECT * FROM category WHERE cat_id = {$post_category_id} ";
+        // $select_category_id = mysqli_query($conn, $query);
+        // while ($row =  mysqli_fetch_assoc($select_category_id)) {
+        //     $cat_id = $row['cat_id'];
+        //     $cat_title = $row['cat_title'];
+        //     echo "<td>{$cat_title}</td>";
+        // }
+        
+        echo "<td>{$comment_status}</td>";
+
+
+        $query = "SELECT * FROM post WHERE post_id = $comment_post_id ";
+        $select_post_id_query = mysqli_query($conn, $query);
+        while($row = mysqli_fetch_assoc($select_post_id_query)){
+            $post_id = $row['post_id'];
+            $post_title = $row['post_title'];
+            echo "<td><a href='../post.php?p_id=$post_id'>{$post_title}</a></td>";
+        }
+        
+        echo "<td>{$comment_Date}</td>";
+        echo "<td><a href='comments.php?approve=$comment_id'>Approve</a></td>";
+        echo "<td><a href='comments.php?unapprove=$comment_id'>Unapprove</a></td>";
+        echo "<td><a href='posts.php?source=edit_post&p_id='>Edit</a></td>";
+        echo "<td><a href='comments.php?delete=$comment_id'>Delete</a></td>";
+        echo "</tr>";
+    }
+}
+
+function deleteComment(){
+    global $conn;
+    if(isset($_GET['delete'])){
+        $the_comment_id = $_GET['delete'];
+        $query = "DELETE FROM comments WHERE comment_id = {$the_comment_id} ";
+        $delete_query = mysqli_query($conn, $query);
+        header("Location: comments.php");
+    }
+}
+function upApproveComment(){
+    global $conn;
+    if(isset($_GET['unapprove'])){
+        $the_comment_id = $_GET['unapprove'];
+        $query = "UPDATE comments SET comment_status = 'unapprove' WHERE comment_id = {$the_comment_id} ";
+        $unapprove_query = mysqli_query($conn, $query);
+        header("Location: comments.php");
+    }
+}
+
+function approveComment(){
+    global $conn;
+    if(isset($_GET['approve'])){
+        $the_comment_id = $_GET['approve'];
+        $query = "UPDATE comments SET comment_status = 'approve' WHERE comment_id = {$the_comment_id} ";
+        $approve_query = mysqli_query($conn, $query);
+        header("Location: comments.php");
+    }
+}
 ?>
