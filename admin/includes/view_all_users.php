@@ -2,20 +2,18 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Author</th>
-            <th>Comment</th>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Email</th>
-            <th>Status</th>
-            <th>In Response to</th>
-            <th>Date</th>
-            <th>Approve</th>
-            <th>UpApprove</th>
+            <th>Image</th>
+            <th>Role</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        <?php findAllComments();deleteComment(); upApproveComment(); approveComment(); ?>
+        <?php findAllUsers();deleteUser(); upApproveComment(); approveComment(); ?>
 
     </tbody>
 </table>
