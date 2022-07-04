@@ -13,7 +13,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             WelCome to Admin
-                            <small>Author Name</small>
+                            <small><?php echo $_SESSION['username'] ?></small>
                         </h1>
                     </div>
                 </div>
