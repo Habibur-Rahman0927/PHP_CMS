@@ -8,12 +8,14 @@
             <th>Email</th>
             <th>Image</th>
             <th>Role</th>
+            <th>Make Subscriber</th>
+            <th>Make Admin</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
     </thead>
     <tbody>
-        <?php findAllUsers();deleteUser(); upApproveComment(); approveComment(); ?>
+        <?php findAllUsers();deleteUser(); change_to_sub(); change_to_admin(); ?>
 
     </tbody>
 </table>
