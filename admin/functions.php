@@ -281,6 +281,7 @@ function insert_user() {
             $query = "INSERT INTO users(user_name, user_password, user_firstname, user_lastname, user_email, user_image, user_role) VALUE('{$user_name}','{$password}', '{$first_name}', '{$last_name}', '{$email}','{$user_image}', '{$user_role}') ";
             $create_user_query = mysqli_query($conn, $query);
             confirmQuery($create_user_query);
+            echo "<div class='alert alert-success' role='alert'>User Created:  <a href='users.php'>View Users</a></div>";
          }
         
 
