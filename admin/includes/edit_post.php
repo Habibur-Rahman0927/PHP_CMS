@@ -43,6 +43,8 @@ if (isset($_POST['update_post'])) {
         $query = "UPDATE post SET post_category_id = '{$post_category_id}', post_title = '{$post_title}', post_author = '{$post_author}', post_image = '{$post_image}', post_content = '{$post_content}', post_tags = '{$post_tags}', post_status = '{$post_status}', post_date = now() WHERE post_id = {$the_post_id} ";
         $update_post_query = mysqli_query($conn, $query);
         confirmQuery($update_post_query);
+        echo "<div class='alert alert-success' role='alert'>Post Updated:  <a href='../post.php?p_id={$the_post_id}'>View Posts</a> or <a href='posts.php'>Edit More Posts</a></div>";
+
     }
 }
 

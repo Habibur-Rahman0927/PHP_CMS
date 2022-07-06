@@ -31,10 +31,11 @@
         <input type="text" class="form-control" name="post_author" id="">
     </div>
 
-    <div class="form-group">
-        <label for="post_status">Post Status</label>
-        <input type="text" class="form-control" name="post_status" id="">
-    </div>
+    <select name="post_status" class="form-control" id="post_status">
+        <option value="draft">Select Options</option>
+        <option value="publishe">Published</option>
+        <option value="draft">Draft</option>
+    </select>
 
     <div class="form-group">
         <label for="image">Post Image</label>
@@ -49,7 +50,7 @@
 
     <div class="form-group">
         <label for="post_content">Post Content</label>
-        <!-- <textarea type="text" class="form-control" name="post_content" id="" cols="10" rows="5"></textarea> -->
+        <textarea type="text" class="form-control" name="post_content" id="body" cols="10" rows="5"></textarea>
         
     </div>
 
