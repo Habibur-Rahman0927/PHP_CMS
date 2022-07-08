@@ -23,6 +23,17 @@ if (isset($_POST['update_user'])) {
     $user_lastname = $_POST['user_lastname'];
     $user_email = $_POST['user_email'];
     $user_role = $_POST['user_role'];
+    $user_password = $_POST['user_password'];
+
+    $query = "SELECT randsalt FROM users";
+    $select_randsalt_query = mysqli_query($conn, $query);
+    if (!$select_randsalt_query) {
+        die("QUERY FAILED" . mysqli_error($conn));
+    }
+
+    $row = mysqli_fetch_array($select_randsalt_query);
+    $salt = $row['randsalt'];
+    $user_password = crypt($user_password, $salt);
 
     $user_image = $_FILES['image']['name'];
     $user_image_temp = $_FILES['image']['tmp_name'];
@@ -38,7 +49,7 @@ if (isset($_POST['update_user'])) {
     if ($user_name == "" || empty($user_name)) {
         echo "This Field is Empty";
     } else {
-        $query = "UPDATE users SET user_id = '{$the_user_id}', user_name = '{$user_name}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}', user_role = '{$user_role}', user_image = '{$user_image}' WHERE user_id = {$the_user_id} ";
+        $query = "UPDATE users SET user_id = '{$the_user_id}', user_name = '{$user_name}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}', user_role = '{$user_role}', user_image = '{$user_image}', user_password = '{$user_password}' WHERE user_id = {$the_user_id} ";
         $create_user_query = mysqli_query($conn, $query);
         confirmQuery($create_user_query);
     }
@@ -64,7 +75,7 @@ if (isset($_POST['update_user'])) {
                         echo "<option value='{$user_id}'>{$user_role}</option>";
                     }
                     ?> -->
-            <option value="subscriber"><?php echo $user_role; ?></option>
+            <option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
             <?php
                 if($user_role == 'admin'){
                     echo "<option value='subscriber'>Subscriber</option>";

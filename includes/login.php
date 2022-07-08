@@ -8,6 +8,16 @@
         $username = mysqli_real_escape_string($conn, $username);
         $password = mysqli_real_escape_string($conn, $password);
 
+        $query = "SELECT randsalt FROM users";
+        $select_randsalt_query = mysqli_query($conn, $query);
+        if (!$select_randsalt_query) {
+            die("QUERY FAILED" . mysqli_error($conn));
+        }
+
+        $row = mysqli_fetch_array($select_randsalt_query);
+        $salt = $row['randsalt'];
+        $password = crypt($password, $salt);
+
         $query = "SELECT * FROM users WHERE user_name = '{$user_name}' ";
         $select_user_query = mysqli_query($conn, $query);
 
@@ -25,6 +35,8 @@
             $db_user_role = $row['user_role'];
 
         }
+        
+        // $password = crypt($password, $db_user_password);
         
         if($user_name === $db_user_name && $password === $db_user_password){
             $_SESSION['username'] = $db_user_name;
